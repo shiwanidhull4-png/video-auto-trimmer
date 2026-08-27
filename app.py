@@ -27,7 +27,9 @@ os.makedirs(UPLOAD_DIR, exist_ok=True)
 os.makedirs(PROCESSED_DIR, exist_ok=True)
 os.makedirs(TEMP_DIR, exist_ok=True)
 
-app = Flask(__name__)
+# The imported project keeps its HTML and CSS at the repository root.
+# Point Flask at that existing layout instead of duplicating the assets.
+app = Flask(__name__, template_folder=BASE_DIR, static_folder=BASE_DIR, static_url_path="")
 app.config["MAX_CONTENT_LENGTH"] = 500 * 1024 * 1024  # 500MB max
 
 # ---------- SETTINGS ----------
