@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Clean Cuts — Auto Video Trimmer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="grain"></div>
+
+<main class="stage">
+
+  <header class="head">
+    <div class="eyebrow"><span class="dot"></span>AUTO&#8209;TRIM</div>
+    <h1>Clean Cuts</h1>
+    <p class="sub">Drop in a video. Dead air and blurry frames get cut automatically — nothing else touched.</p>
+  </header>
+
+  <section class="panel" id="panel">
+
+    <!-- STATE 1: UPLOAD -->
+    <div class="state" id="state-upload">
+      <label class="dropzone" id="dropzone" for="fileInput" tabindex="0">
+        <svg class="wave-icon" viewBox="0 0 120 40" aria-hidden="true">
+          <rect x="2"  y="16" width="4" height="8"  rx="2"/>
+          <rect x="12" y="10" width="4" height="20" rx="2"/>
+          <rect x="22" y="4"  width="4" height="32" rx="2"/>
+          <rect x="32" y="14" width="4" height="12" rx="2"/>
+          <rect x="42" y="18" width="4" height="4"  rx="2" class="dim"/>
+          <rect x="52" y="18" width="4" height="4"  rx="2" class="dim"/>
+          <rect x="62" y="18" width="4" height="4"  rx="2" class="dim"/>
+          <rect x="72" y="8"  width="4" height="24" rx="2"/>
+          <rect x="82" y="2"  width="4" height="36" rx="2"/>
+          <rect x="92" y="12" width="4" height="16" rx="2"/>
+          <rect x="102" y="16" width="4" height="8" rx="2"/>
+          <rect x="112" y="18" width="4" height="4" rx="2"/>
+        </svg>
+        <div class="drop-text">Drop a video here, or <span>browse</span></div>
+        <div class="drop-hint">MP4 · MOV · AVI · MKV · WEBM — up to 500MB</div>
+        <input type="file" id="fileInput" accept="video/*" hidden>
+      </label>
+      <p class="error" id="errorMsg" hidden></p>
+    </div>
+
+    <!-- STATE 2: PROCESSING -->
+    <div class="state" id="state-processing" hidden>
+      <div class="filename mono" id="fileNameLabel">video.mp4</div>
+
+      <div class="scanbar">
+        <div class="scanbar-track"></div>
+        <div class="scanbar-sweep"></div>
+      </div>
+
+      <ul class="status-log" id="statusLog"></ul>
+    </div>
+
+    <!-- STATE 3: RESULT -->
+    <div class="state" id="state-result" hidden>
+      <div class="filename mono" id="resultFileName">video.mp4</div>
+
+      <div class="timeline" id="timeline" aria-label="Timeline showing kept and removed segments">
+        <!-- segments injected by JS -->
+      </div>
+      <div class="legend">
+        <span><i class="swatch keep"></i>Kept</span>
+        <span><i class="swatch cut"></i>Removed</span>
+      </div>
+
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-label">Original</div>
+          <div class="stat-value mono" id="statOriginal">0:00</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">Final</div>
+          <div class="stat-value mono" id="statFinal">0:00</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">Removed</div>
+          <div class="stat-value mono accent" id="statRemoved">0%</div>
+        </div>
+      </div>
+
+      <div class="detected mono" id="detectedLine"></div>
+
+      <div class="actions">
+        <a class="btn-download" id="downloadBtn" href="#" download>Download clean video</a>
+        <button class="btn-reset" id="resetBtn">Trim another video</button>
+      </div>
+    </div>
+
+    <!-- STATE 4: ERROR -->
+    <div class="state" id="state-error" hidden>
+      <p class="error-big" id="errorBig">Something went wrong.</p>
+      <button class="btn-reset" id="errorResetBtn">Try again</button>
+    </div>
+
+  </section>
+
+  <footer class="foot mono">runs locally &middot; nothing leaves this machine</footer>
+
+</main>
+
+<script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>
